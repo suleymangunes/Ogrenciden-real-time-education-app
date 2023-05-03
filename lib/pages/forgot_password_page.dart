@@ -71,6 +71,45 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     },
                   ),
                 ),
+                 SizedBox(
+                  height: SizedboxConstans.instance.spaceSmall,
+                ),
+                SizedBox(
+                  width: SizedboxConstans.instance.textFieldNormal,
+                  child: Hero(
+                    tag: "basla",
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(5),
+                          backgroundColor: MaterialStateProperty.all(ColorConstants.instance.hippieGreen),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)))),
+                      onPressed: (() {
+                        if (_formkey.currentState!.validate()) {
+                          print(_controllerMail.text);
+                          setState(() {
+                            _butstate = true;
+                          });
+                          authService.resetPassword(_controllerMail.text).then((value) {
+                            print('oldu');
+                            value;
+                          }).onError((error, stackTrace) {
+                            return showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ErrorMessage(message: error);
+                              },
+                            );
+                          });
+                        }
+                        // setState(() {
+                        //   _butstate = true;
+                        // });
+                        // Get.to(const ForgotPasswordCheck());
+                      }),
+                      // bu ksim tasarlnacak
+                      child: const Text("deneme"),
+                      // 
                
           ),
         ),
