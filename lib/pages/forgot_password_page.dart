@@ -107,9 +107,25 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         // });
                         // Get.to(const ForgotPasswordCheck());
                       }),
-                      // bu ksim tasarlnacak
-                      child: const Text("deneme"),
-                      // 
+                     child: _butstate
+                          ? SizedBox(
+                              height: SizedboxConstans.instance.riveHeight,
+                              width: SizedboxConstans.instance.riveWidth,
+                              child: const RiveAnimation.asset("assets/gifs/loading.riv"))
+                          : Padding(
+                              padding: PaddingConstants.instance.paddingHorizontalNormal,
+                              child: Text(
+                                "Doğrula",
+                                style:
+                                    TextStyle(fontSize: StringDetailConstants.instance.buttonBigSize, letterSpacing: 3),
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: SizedboxConstans.instance.spaceSmall,
+                ),     // 
                
           ),
         ),
