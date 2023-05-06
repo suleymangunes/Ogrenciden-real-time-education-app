@@ -55,6 +55,15 @@ class _SignInState extends State<SignIn> {
                             vertical: StringDetailConstants.instance.textFieldSize),
                         labelText: "Email",
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                               validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Mail alanı boş bırakılamaz.";
+                      }
+                      if (EmailValidator.validate(value) == false) {
+                        return "Lütfen geçerli bir mail girin.";
+                      }
+                      return null;
+                    },
             
                   ),
                 ),
@@ -72,6 +81,15 @@ class _SignInState extends State<SignIn> {
                             vertical: StringDetailConstants.instance.textFieldSize),
                         labelText: "Şifre",
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                              validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Şifre boş olamaz";
+                      }
+                      if (value.length <= 8) {
+                        return "Şifre 8 karakterden büyük olmalıdır.";
+                      }
+                      return null;
+                    },
                  
                   ),
                 ),
