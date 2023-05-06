@@ -73,6 +73,10 @@ class _SignInState extends State<SignIn> {
                 SizedBox(
                   width: SizedboxConstans.instance.textFieldNormal,
                   child: TextFormField(
+                     controller: _controllerPassword,// sifre kontrol
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
                     style: TextStyle(fontSize: StringDetailConstants.instance.textFieldSize),
                     decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.key_rounded),
