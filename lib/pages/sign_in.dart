@@ -1,6 +1,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/alerts/alert_error.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/pages/forgot_password_page.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/pages/home_page.dart';
 
 import 'package:rive/rive.dart';
 
@@ -55,7 +58,7 @@ class _SignInState extends State<SignIn> {
                             vertical: StringDetailConstants.instance.textFieldSize),
                         labelText: "Email",
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-                               validator: (value) {
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Mail alanı boş bırakılamaz.";
                       }
@@ -64,7 +67,6 @@ class _SignInState extends State<SignIn> {
                       }
                       return null;
                     },
-            
                   ),
                 ),
                 SizedBox(
@@ -73,7 +75,7 @@ class _SignInState extends State<SignIn> {
                 SizedBox(
                   width: SizedboxConstans.instance.textFieldNormal,
                   child: TextFormField(
-                     controller: _controllerPassword,// sifre kontrol
+                    controller: _controllerPassword,// sifre kontrol
                     obscureText: true,
                     enableSuggestions: false,
                     autocorrect: false,
@@ -85,7 +87,7 @@ class _SignInState extends State<SignIn> {
                             vertical: StringDetailConstants.instance.textFieldSize),
                         labelText: "Şifre",
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-                              validator: (value) {
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Şifre boş olamaz";
                       }
@@ -94,10 +96,66 @@ class _SignInState extends State<SignIn> {
                       }
                       return null;
                     },
-                 
                   ),
                 ),
-          
+                SizedBox(
+                  height: SizedboxConstans.instance.spaceSmallBit,
+                ),
+                SizedBox(
+                  width: SizedboxConstans.instance.textFieldNormal,
+                  child: Hero(
+                    tag: "basla",
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(5),
+                          backgroundColor: MaterialStateProperty.all(ColorConstants.instance.hippieGreen),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)))),
+                      onPressed: (() async {
+                        if (_formkey.currentState!.validate()) {
+                          setState(() {
+                            _butstate = true;
+                          });
+                          await authService
+                              .signIn(
+                            _controllerMail.text,
+                            _controllerPassword.text,
+                          )
+                              .then((value) {
+                            Get.offAll(const HomePage());
+                          }).onError((error, stackTrace) {
+                            return showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ErrorMessage(message: error);
+                              },
+                            );
+                          });
+                        }
+                        setState(() {
+                          _butstate = false;
+                        });
+                      }),
+                      child: _butstate
+                          ? SizedBox(
+                              height: SizedboxConstans.instance.riveHeight,
+                              width: SizedboxConstans.instance.riveWidth,
+                              child: const RiveAnimation.asset("assets/gifs/loading.riv"))
+                          : Padding(
+                              padding: PaddingConstants.instance.paddingHorizontalNormal,
+                              child: Text(
+                                "Giriş Yap",
+                                style:
+                                    TextStyle(fontSize: StringDetailConstants.instance.buttonBigSize, letterSpacing: 3),
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: SizedboxConstans.instance.spaceSmall,
+                ),
+
               ],
             ),
           ),
