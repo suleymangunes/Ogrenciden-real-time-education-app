@@ -155,6 +155,27 @@ class _SignInState extends State<SignIn> {
                 SizedBox(
                   height: SizedboxConstans.instance.spaceSmall,
                 ),
+                                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Hesabın yok mu?",
+                      style: TextStyle(fontSize: StringDetailConstants.instance.textSizeSmall),
+                    ),
+                    TextButton(
+                      onPressed: (() {
+                        Get.offAll(const RegisterPage(), duration: const Duration(milliseconds: 500));
+                      }),
+                      child: Text(
+                        "Hemen Oluştur",
+                        style: TextStyle(
+                            color: ColorConstants.instance.textColorBlack,
+                            fontWeight: StringDetailConstants.instance.textWeightSemiBold,
+                            fontSize: StringDetailConstants.instance.textSizeSmall),
+                      ),
+                    )
+                  ],
+                ),
 
               ],
             ),
