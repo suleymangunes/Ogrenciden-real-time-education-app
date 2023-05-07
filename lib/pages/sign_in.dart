@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/alerts/alert_error.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/pages/forgot_password_page.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/constants/padding_constants.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/constants/sizedbox_constants.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/constants/string_detail_constants.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/pages/home_page.dart';
 
 import 'package:rive/rive.dart';
@@ -168,6 +171,23 @@ class _SignInState extends State<SignIn> {
                       }),
                       child: Text(
                         "Hemen Oluştur",
+                        style: TextStyle(
+                            color: ColorConstants.instance.textColorBlack,
+                            fontWeight: StringDetailConstants.instance.textWeightSemiBold,
+                            fontSize: StringDetailConstants.instance.textSizeSmall),
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: (() {
+                        Get.offAll(const ForgotPassword());
+                      }),
+                      child: Text(
+                        "Şifremi Unuttum",
                         style: TextStyle(
                             color: ColorConstants.instance.textColorBlack,
                             fontWeight: StringDetailConstants.instance.textWeightSemiBold,
