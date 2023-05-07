@@ -1,28 +1,26 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:ogrenciden_canli_egitim_uygulamasi/alerts/alert_error.dart';
-import 'package:ogrenciden_canli_egitim_uygulamasi/constants/sizedbox_constants.dart';
-import 'package:ogrenciden_canli_egitim_uygulamasi/service/auth_register.dart';
+import 'package:get/get.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/pages/new_password_page.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/pages/sign_in.dart';
 import 'package:rive/rive.dart';
 
 import '../constants/color_constants.dart';
 import '../constants/padding_constants.dart';
+import '../constants/sizedbox_constants.dart';
 import '../constants/string_detail_constants.dart';
 
-class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({super.key});
+class ForgotPasswordCheck extends StatefulWidget {
+  const ForgotPasswordCheck({super.key});
 
   @override
-  State<ForgotPassword> createState() => _ForgotPasswordState();
+  State<ForgotPasswordCheck> createState() => _ForgotPasswordCheckState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> {
+class _ForgotPasswordCheckState extends State<ForgotPasswordCheck> {
   final _formkey = GlobalKey<FormState>();
   final TextEditingController _controllerMail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
   bool _butstate = false;
-
-  AuthService authService = AuthService();
 
   @override
   void dispose() {
@@ -58,20 +56,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: StringDetailConstants.instance.textFieldSize,
                             vertical: StringDetailConstants.instance.textFieldSize),
-                        labelText: "Email",
+                        labelText: "Doğrulama Kodu",
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Mail alanı boş bırakılamaz.";
                       }
-                      if (EmailValidator.validate(value) == false) {
-                        return "Lütfen geçerli bir mail girin.";
-                      }
                       return null;
                     },
                   ),
                 ),
-                 SizedBox(
+                SizedBox(
                   height: SizedboxConstans.instance.spaceSmall,
                 ),
                 SizedBox(
@@ -86,28 +81,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)))),
                       onPressed: (() {
                         if (_formkey.currentState!.validate()) {
-                          print(_controllerMail.text);
                           setState(() {
                             _butstate = true;
                           });
-                          authService.resetPassword(_controllerMail.text).then((value) {
-                            print('oldu');
-                            value;
-                          }).onError((error, stackTrace) {
-                            return showDialog(
-                              context: context,
-                              builder: (context) {
-                                return ErrorMessage(message: error);
-                              },
-                            );
-                          });
                         }
-                        // setState(() {
-                        //   _butstate = true;
-                        // });
-                        // Get.to(const ForgotPasswordCheck());
+                        setState(() {
+                          _butstate = true;
+                        });
+                        Get.offAll(const NewPassword());
                       }),
-                     child: _butstate
+                      child: _butstate
                           ? SizedBox(
                               height: SizedboxConstans.instance.riveHeight,
                               width: SizedboxConstans.instance.riveWidth,
@@ -125,12 +108,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ),
                 SizedBox(
                   height: SizedboxConstans.instance.spaceSmall,
-                ),     // 
-               
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
--
