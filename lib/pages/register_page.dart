@@ -16,4 +16,59 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {}
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController _controllerMail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+  final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerPasswordAgain = TextEditingController();
+
+  final _formkey = GlobalKey<FormState>();
+  final bool _butState = false;
+
+  AuthService authService = AuthService();
+
+  @override
+  void dispose() {
+    _controllerMail.dispose();
+    _controllerName.dispose();
+    _controllerPassword.dispose();
+    _controllerPasswordAgain.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formkey,
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: Get.height * 0.05,
+                ),
+                Image.asset("assets/images/ogrenciden_logo_png.png", height: SizedboxConstans.instance.spaceNormal),
+                SizedBox(
+                  height: Get.height * 0.1,
+                ),
+                SizedBox(
+                  width: Get.width * 0.8,
+                  child: TextFormField(
+                    controller: _controllerName,
+                    style: TextStyle(fontSize: Get.width * 0.04),
+                    decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.person),
+                        contentPadding: EdgeInsets.symmetric(horizontal: Get.width * 0.04, vertical: Get.width * 0.04),
+                        labelText: "İsim Soyisim",
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "İsim alanı boş bırakılamaz.";
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+}
