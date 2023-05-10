@@ -71,4 +71,28 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                 ),
+                SizedBox(
+                  height: Get.height * 0.02,
+                ),
+                SizedBox(
+                  width: Get.width * 0.8,
+                  child: TextFormField(
+                    controller: _controllerMail,
+                    style: TextStyle(fontSize: Get.width * 0.04),
+                    decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.mail_outline_rounded),
+                        contentPadding: EdgeInsets.symmetric(horizontal: Get.width * 0.04, vertical: Get.width * 0.04),
+                        labelText: "Email",
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Mail alanı boş bırakılamaz.";
+                      }
+                      if (EmailValidator.validate(value) == false) {
+                        return "Lütfen geçerli bir mail girin.";
+                      }
+                      return null;
+                    },
+                  ),
+                ),
 }
