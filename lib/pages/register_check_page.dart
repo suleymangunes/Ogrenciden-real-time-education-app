@@ -38,6 +38,25 @@ class _RegisterCheckState extends State<RegisterCheck> {
                 SizedBox(
                   height: SizedboxConstans.instance.spaceBottom,
                 ),
+                    Image.asset("assets/images/ogrenciden_logo_png.png", height: SizedboxConstans.instance.spaceNormal),
+                SizedBox(
+                  height: SizedboxConstans.instance.spaceNormal,
+                ),
+                SizedBox(
+                  width: SizedboxConstans.instance.textFieldNormal,
+                  child: TextFormField(
+                    controller: _controllerMail,
+                    style: TextStyle(fontSize: StringDetailConstants.instance.textFieldSize),
+                    decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.mail_outline_rounded),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: StringDetailConstants.instance.textFieldSize,
+                            vertical: StringDetailConstants.instance.textFieldSize),
+                        labelText: "Doğrulama Kodu",
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          
+                  ),
+                ),
            
               ],
             ),
