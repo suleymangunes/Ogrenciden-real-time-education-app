@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/pages/sign_in.dart';
-import '../constants/string_detail_constants.dart';
 import 'package:rive/rive.dart';
+
+
+import '../constants/string_detail_constants.dart';
 import 'new_password_page.dart';
 
 class RegisterCheck extends StatefulWidget {
@@ -38,7 +40,7 @@ class _RegisterCheckState extends State<RegisterCheck> {
                 SizedBox(
                   height: SizedboxConstans.instance.spaceBottom,
                 ),
-                    Image.asset("assets/images/ogrenciden_logo_png.png", height: SizedboxConstans.instance.spaceNormal),
+                Image.asset("assets/images/ogrenciden_logo_png.png", height: SizedboxConstans.instance.spaceNormal),
                 SizedBox(
                   height: SizedboxConstans.instance.spaceNormal,
                 ),
@@ -54,10 +56,32 @@ class _RegisterCheckState extends State<RegisterCheck> {
                             vertical: StringDetailConstants.instance.textFieldSize),
                         labelText: "Doğrulama Kodu",
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-          
+
                   ),
                 ),
-           
+                SizedBox(
+                  height: SizedboxConstans.instance.spaceSmall,
+                ),
+                SizedBox(
+                  width: SizedboxConstans.instance.textFieldNormal,
+                      child: _butstate
+                          ? SizedBox(
+                              height: SizedboxConstans.instance.riveHeight,
+                              width: SizedboxConstans.instance.riveWidth,
+                              child: const RiveAnimation.asset("assets/gifs/loading.riv"))
+                          : Padding(
+                              padding: PaddingConstants.instance.paddingHorizontalNormal,
+                              child: Text(
+                                "Doğrula",
+                                style:
+                                    TextStyle(fontSize: StringDetailConstants.instance.buttonBigSize, letterSpacing: 3),
+                              ),
+                            ),
+                   
+                ),
+                SizedBox(
+                  height: SizedboxConstans.instance.spaceSmall,
+                ),
               ],
             ),
           ),
