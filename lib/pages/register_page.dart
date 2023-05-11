@@ -95,4 +95,48 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                 ),
+                SizedBox(
+                  height: Get.height * 0.02,
+                ),
+                SizedBox(
+                  width: Get.width * 0.8,
+                  child: TextFormField(
+                    controller: _controllerPassword,
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    style: TextStyle(fontSize: Get.width * 0.04),
+                    decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.key_rounded),
+                        contentPadding: EdgeInsets.symmetric(horizontal: Get.width * 0.04, vertical: Get.width * 0.04),
+                        labelText: "Şifre",
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Şifre boş olamaz";
+                      }
+                      if (_controllerPassword.text != _controllerPasswordAgain.text) {
+                        return "Şifreler aynı olmalıdır.";
+                      } else if (value.length <= 8 &&
+                          (value.contains(RegExp(r'[A-Z]')) != true) &&
+                          (value.contains(RegExp(r'[0-9]')) != true)) {
+                        return "• Şifre 8 karakterden büyük olmalıdır.\n• Şifre en az bir büyük harf barındırmalıdır.\n• Şifre en az bir rakam barındırmalıdır.";
+                      } else if (value.length <= 8 && (value.contains(RegExp(r'[A-Z]')) != true)) {
+                        return "• Şifre 8 karakterden büyük olmalıdır.\n• Şifre en az bir büyük harf barındırmalıdır.";
+                      } else if (value.length <= 8 && (value.contains(RegExp(r'[0-9]')) != true)) {
+                        return "• Şifre 8 karakterden büyük olmalıdır.\n• Şifre en az bir rakam barındırmalıdır.";
+                      } else if ((value.contains(RegExp(r'[A-Z]')) != true) &&
+                          (value.contains(RegExp(r'[0-9]')) != true)) {
+                        return "• Şifre en az bir büyük harf barındırmalıdır.\n• Şifre en az bir rakam barındırmalıdır.";
+                      } else if (value.contains(RegExp(r'[A-Z]')) != true) {
+                        return "Şifrede en az bir büyük harf bulunmalıdır.";
+                      } else if (value.contains(RegExp(r'[0-9]')) != true) {
+                        return "Şifrede en az bir rakam bulunmalıdır.";
+                      } else if (value.length <= 8) {
+                        return "Şifre 8 karakterden büyük olmalıdır.";
+                      }
+                      return null;
+                    },
+                  ),
+                ),
 }
