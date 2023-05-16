@@ -213,4 +213,25 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: Get.height * 0.02,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Hesabın var mı?",
+                      style: TextStyle(fontSize: Get.width * 0.03),
+                    ),
+                    TextButton(
+                      onPressed: (() {
+                        Get.back();
+                      }),
+                      child: Text(
+                        "Hemen Giriş Yap",
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: Get.width * 0.03),
+                      ),
+                    )
+                  ],
+                ),
 }
