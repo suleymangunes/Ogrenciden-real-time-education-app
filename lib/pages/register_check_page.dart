@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/pages/sign_in.dart';
 import 'package:rive/rive.dart';
 
-
+import '../constants/color_constants.dart';
+import '../constants/padding_constants.dart';
+import '../constants/sizedbox_constants.dart';
 import '../constants/string_detail_constants.dart';
 import 'new_password_page.dart';
 
@@ -56,6 +58,12 @@ class _RegisterCheckState extends State<RegisterCheck> {
                             vertical: StringDetailConstants.instance.textFieldSize),
                         labelText: "Doğrulama Kodu",
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                           validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Mail alanı boş bırakılamaz.";
+                      }
+                      return null;
+                    },
 
                   ),
                 ),
