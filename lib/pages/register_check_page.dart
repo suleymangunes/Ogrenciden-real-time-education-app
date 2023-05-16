@@ -58,13 +58,12 @@ class _RegisterCheckState extends State<RegisterCheck> {
                             vertical: StringDetailConstants.instance.textFieldSize),
                         labelText: "Doğrulama Kodu",
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-                           validator: (value) {
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Mail alanı boş bırakılamaz.";
                       }
                       return null;
                     },
-
                   ),
                 ),
                 SizedBox(
@@ -72,6 +71,25 @@ class _RegisterCheckState extends State<RegisterCheck> {
                 ),
                 SizedBox(
                   width: SizedboxConstans.instance.textFieldNormal,
+                  child: Hero(
+                    tag: "basla",
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(5),
+                          backgroundColor: MaterialStateProperty.all(ColorConstants.instance.hippieGreen),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)))),
+                      onPressed: (() {
+                        if (_formkey.currentState!.validate()) {
+                          setState(() {
+                            _butstate = true;
+                          });
+                        }
+                        setState(() {
+                          _butstate = true;
+                        });
+                        Get.offAll(const SignIn());
+                      }),
                       child: _butstate
                           ? SizedBox(
                               height: SizedboxConstans.instance.riveHeight,
@@ -85,7 +103,8 @@ class _RegisterCheckState extends State<RegisterCheck> {
                                     TextStyle(fontSize: StringDetailConstants.instance.buttonBigSize, letterSpacing: 3),
                               ),
                             ),
-                   
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: SizedboxConstans.instance.spaceSmall,
