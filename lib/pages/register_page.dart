@@ -169,4 +169,48 @@ class _RegisterPageState extends State<RegisterPage> {
                 SizedBox(
                   height: Get.height * 0.03,
                 ),
+                SizedBox(
+                  width: Get.width * 0.79,
+                  child: Hero(
+                    tag: "basla",
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(5),
+                          backgroundColor: MaterialStateProperty.all(ColorConstants.instance.hippieGreen),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)))),
+                      onPressed: (() async {
+                        if (_formkey.currentState!.validate()) {
+                          setState(() {
+                            _butState = true;
+                          });
+
+                          await authService
+                              .createPerson(
+                            _controllerName.text,
+                            _controllerMail.text,
+                            _controllerPassword.text,
+                          )
+                          
+                          setState(() {
+                            _butState = false;
+                          });
+                        }
+                      }),
+                      child: _butState
+                          ? SizedBox(
+                              height: Get.height * 0.065,
+                              width: 80,
+                              child: const RiveAnimation.asset("assets/gifs/loading.riv"),
+                            )
+                          : Padding(
+                              padding: EdgeInsets.symmetric(horizontal: Get.width * 0.04, vertical: Get.width * 0.040),
+                              child: Text(
+                                "Kaydol",
+                                style: TextStyle(fontSize: Get.width * 0.05, letterSpacing: 3),
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
 }
