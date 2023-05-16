@@ -139,4 +139,34 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                 ),
+                SizedBox(
+                  height: Get.height * 0.02,
+                ),
+                SizedBox(
+                  width: Get.width * 0.8,
+                  child: TextFormField(
+                    controller: _controllerPasswordAgain,
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    style: TextStyle(fontSize: Get.width * 0.04),
+                    decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.key_rounded),
+                        contentPadding: EdgeInsets.symmetric(horizontal: Get.width * 0.04, vertical: Get.width * 0.04),
+                        labelText: "Şifre Tekrar",
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Şifre boş olamaz";
+                      }
+                      if (_controllerPassword.text != _controllerPasswordAgain.text) {
+                        return "Şifreler aynı olmalıdır.";
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: Get.height * 0.03,
+                ),
 }
