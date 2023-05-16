@@ -106,6 +106,7 @@ class _RegisterCheckState extends State<RegisterCheck> {
                     ),
                   ),
                 ),
+                
                 SizedBox(
                   height: SizedboxConstans.instance.spaceSmall,
                 ),
