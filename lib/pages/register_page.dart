@@ -190,7 +190,19 @@ class _RegisterPageState extends State<RegisterPage> {
                             _controllerName.text,
                             _controllerMail.text,
                             _controllerPassword.text,
-                          )
+                          )    .then((value) {
+                            Get.offAll(const SignIn());
+                            return showDialog(
+                              context: context,
+                              builder: (context) {
+                                return SuccesMessage(
+                                  message: 'Kaydolma isleminiz basariyla tamamlanmistir. Giris yapabilirsiniz.',
+                                  title: 'Kaydolundu',
+                                  butonText: 'Giris Yap',
+                                  fonks: () => Get.back(),
+                                );
+                              },
+                            );
                           
                           setState(() {
                             _butState = false;
