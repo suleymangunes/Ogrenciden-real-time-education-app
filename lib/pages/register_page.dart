@@ -203,7 +203,21 @@ class _RegisterPageState extends State<RegisterPage> {
                                 );
                               },
                             );
-                          
+                          }).onError((error, stackTrace) {
+                            return showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ErrorMessage(
+                                  message: error,
+                                );
+                              },
+                            );
+                          });
+                          setState(() {
+                            _butState = false;
+                          });
+                        }
+                      }),
                           setState(() {
                             _butState = false;
                           });
@@ -211,13 +225,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       }),
                       child: _butState
                           ? SizedBox(
-                              height: Get.height * 0.065,
-                              width: 80,
-                              child: const RiveAnimation.asset("assets/gifs/loading.riv"),
+                              height = Get.height * 0.065,
+                              width = 80,
+                              child = const RiveAnimation.asset("assets/gifs/loading.riv"),
                             )
                           : Padding(
-                              padding: EdgeInsets.symmetric(horizontal: Get.width * 0.04, vertical: Get.width * 0.040),
-                              child: Text(
+                              padding = EdgeInsets.symmetric(horizontal: Get.width * 0.04, vertical: Get.width * 0.040),
+                              child = Text(
                                 "Kaydol",
                                 style: TextStyle(fontSize: Get.width * 0.05, letterSpacing: 3),
                               ),
@@ -226,11 +240,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 SizedBox(
-                  height: Get.height * 0.02,
+                  height = Get.height * 0.02,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  mainAxisAlignment = MainAxisAlignment.center,
+                  children = [
                     Text(
                       "Hesabın var mı?",
                       style: TextStyle(fontSize: Get.width * 0.03),
