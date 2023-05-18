@@ -32,6 +32,83 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          toolbarHeight: Get.height * 0.07,
+          title: Align(
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all(Size(Get.width * 0.7, Get.height * 0.05)),
+                      elevation: MaterialStateProperty.all(3),
+                      backgroundColor: MaterialStateProperty.all(Colors.white),
+                      shape:
+                          MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)))),
+                  onPressed: (() {
+                    Get.to(const AramaPage());
+                  }),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.search,
+                        color: Colors.grey,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: Get.width * 0.01),
+                        child: const Text(
+                          "Search something...",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: Get.width * 0.05,
+                ),
+                Image.asset(
+                  "assets/images/ogrenciden_logo_png.png",
+                  height: Get.height * 0.05,
+                )
+              ],
+            ),
+          )),
+      body: FutureBuilder(
+        future: futureveri,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return const Text('hata olustu');
+            case ConnectionState.waiting:
+              return const Center(child: CircularProgressIndicator());
+            case ConnectionState.active:
+              return const Center(child: CircularProgressIndicator());
+
+            case ConnectionState.done:
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: snapshot.data.docs.length ?? 0,
+                  // itemCount: 0,
+                  itemBuilder: ((context, index) {
+                    return CardDesign(
+                      ogretmenisim: snapshot.data.docs[index].data()['ogretmenisim'].toString(),
+                      dersicerigi: snapshot.data.docs[index].data()['dersicerigi'].toString(),
+                      dersadi: snapshot.data.docs[index].data()['dersadi'].toString(),
+                      dersid: snapshot.data.docs[index].data()['dersid'].toString(),
+                      ogretmenid: snapshot.data.docs[index].data()['ogretmenid'].toString(),
+                    );
+                  }),
+                );
+              } else {
+                return const Text('data yok');
+              }
+          }
+        },
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         backgroundColor: ColorConstants.instance.hippieGreenDark,
