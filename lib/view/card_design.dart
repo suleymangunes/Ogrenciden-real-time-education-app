@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/constants/sizedbox_constants.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/constants/string_detail_constants.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/pages/enter_lesson_page.dart';
 import '../constants/color_constants.dart';
 
 class CardDesign extends StatefulWidget {
@@ -32,7 +34,54 @@ class _CardDesignState extends State<CardDesign> {
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-     
+        child: ListTile(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: Get.width * 0.58,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.ogretmenisim,
+                      style: TextStyle(
+                        fontWeight: StringDetailConstants.instance.textWeightBold,
+                        fontSize: StringDetailConstants.instance.buttonBigSize,
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizedboxConstans.instance.spaceSmall,
+                    ),
+                    Text(
+                      widget.dersadi,
+                      style: TextStyle(
+                        fontWeight: StringDetailConstants.instance.textWeightSemiBold,
+                        fontSize: StringDetailConstants.instance.textFieldSize,
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizedboxConstans.instance.spaceSmall / 2,
+                    ),
+                    Text(widget.dersicerigi)
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/insan.png",
+                      fit: BoxFit.cover,
+                      height: 60,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
