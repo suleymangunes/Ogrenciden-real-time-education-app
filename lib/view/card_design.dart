@@ -76,6 +76,22 @@ class _CardDesignState extends State<CardDesign> {
                       fit: BoxFit.cover,
                       height: 60,
                     ),
+                    ElevatedButton( //buton
+                      style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(3),
+                          backgroundColor: MaterialStateProperty.all(ColorConstants.instance.hippieGreen),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
+                      onPressed: (() {
+                        Get.offAll(EnterLesson(
+                          ogretmenadi: widget.ogretmenisim,
+                          dersisim: widget.dersadi,
+                          dersicerigi: widget.dersicerigi,
+                          dersid: widget.dersid,
+                          ogretmenid: widget.ogretmenid,
+                        ));
+                      }),
+                    ),
                   ],
                 ),
               ),
