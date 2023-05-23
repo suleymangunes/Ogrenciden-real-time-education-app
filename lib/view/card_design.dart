@@ -76,7 +76,10 @@ class _CardDesignState extends State<CardDesign> {
                       fit: BoxFit.cover,
                       height: 60,
                     ),
-                    ElevatedButton( //buton
+                    SizedBox(
+                      height: SizedboxConstans.instance.spaceSmall / 2,
+                    ),
+                    ElevatedButton(
                       style: ButtonStyle(
                           elevation: MaterialStateProperty.all(3),
                           backgroundColor: MaterialStateProperty.all(ColorConstants.instance.hippieGreen),
@@ -91,6 +94,13 @@ class _CardDesignState extends State<CardDesign> {
                           ogretmenid: widget.ogretmenid,
                         ));
                       }),
+                      child: Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: Text(
+                          "Katıl",
+                          style: TextStyle(fontSize: Get.width * 0.04, letterSpacing: 0),
+                        ),
+                      ),
                     ),
                   ],
                 ),
