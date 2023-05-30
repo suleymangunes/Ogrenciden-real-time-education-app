@@ -10,7 +10,15 @@ import 'package:http/http.dart' as http;
 
 String token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlrZXkiOiI3Zjk5YTRjNC00NjA2LTQ3MDktYWNjMy1lZTAxOTdjY2Y1OGMiLCJwZXJtaXNzaW9ucyI6WyJhbGxvd19qb2luIl0sImlhdCI6MTY3MjI0ODQwMiwiZXhwIjoxNjc0ODQwNDAyfQ.ft5uORSdTyC-CgMoreKulQPWNs3KrcNjVAJk8JlxdVs";
-    
+
+Future<String> createMeeting() async {
+  final http.Response httpResponse = await http.post(
+    Uri.parse("https://api.videosdk.live/v2/rooms"),
+    headers: {'Authorization': token},
+  );
+
+  return json.decode(httpResponse.body)['roomId'];
+}
 class DerslerimPage extends StatefulWidget {
   const DerslerimPage({
     super.key,
@@ -19,8 +27,10 @@ class DerslerimPage extends StatefulWidget {
   @override
   State<DerslerimPage> createState() => _DerslerimPageState();
 }
-
 class _DerslerimPageState extends State<DerslerimPage> {
+  List alinandersler = [];
+  static List listem = [];
+  List listem2 = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +41,27 @@ class _DerslerimPageState extends State<DerslerimPage> {
             alignment: Alignment.center,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [    
+              children: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all(Size(Get.width * 0.7, Get.height * 0.05)),
+                      elevation: MaterialStateProperty.all(3),
+                      backgroundColor: MaterialStateProperty.all(Colors.white),
+                      shape:
+                          MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)))),
+                  onPressed: (() {
+                    print(alinandersler);
+                    bak();
+                  }),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.search,
+                        color: Colors.grey,
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(
                   width: Get.width * 0.05,
                 ),
@@ -41,8 +71,60 @@ class _DerslerimPageState extends State<DerslerimPage> {
                 )
               ],
             ),
-          )
-        ),
+          )),
+      body: FutureBuilder(
+        future: dersler,
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            listem = [];
+            for (var element in snapshot.data.docs) {
+              listem.add(element.data()['ders']);
+            }
+            print(listem);
+          }
+          return FutureBuilder(
+            future: _firestore.collection('dersler').get(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  return const Text('error');
+                case ConnectionState.waiting:
+                  return const Center(child: CircularProgressIndicator());
+                case ConnectionState.active:
+                  return const Center(child: CircularProgressIndicator());
+
+                case ConnectionState.done:
+                  if (snapshot.hasData) {
+                    listem2 = [];
+                    int a = 0;
+                    for (var element in snapshot.data.docs) {
+                      if (listem.contains(element.data()['dersid'])) {
+                        listem2.add(element.data());
+                      }
+                    }
+                    print(listem2);
+                    print('data var');
+                    return ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: listem2.length,
+                      // itemCount: 0,
+                      itemBuilder: ((context, index) {
+                        return SelectedCardDesign(
+                          dersadi: listem2[index]['dersadi'],
+                          ogretmenisim: listem2[index]['ogretmenisim'],
+                          dersid: listem2[index]['dersid'],
+                          ogretmenid: listem2[index]['ogretmenid'],
+                        );
+                      }),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+              }
+            },
+          );
+        },
+      ),
     );
   }
 }
