@@ -19,6 +19,7 @@ Future<String> createMeeting() async {
 
   return json.decode(httpResponse.body)['roomId'];
 }
+
 class DerslerimPage extends StatefulWidget {
   const DerslerimPage({
     super.key,
@@ -27,10 +28,36 @@ class DerslerimPage extends StatefulWidget {
   @override
   State<DerslerimPage> createState() => _DerslerimPageState();
 }
+
 class _DerslerimPageState extends State<DerslerimPage> {
   List alinandersler = [];
   static List listem = [];
   List listem2 = [];
+  AuthService authService = AuthService();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Future? dersler;
+  derslerial() async {
+    return await firestore.collection('Person').doc(authService.infouser()).collection('alinacakdersler').get();
+  }
+
+  @override
+  void initState() {
+    authService.derslerimiGoster().then((value) {
+      alinandersler = value.docs;
+    });
+    print(alinandersler);
+    dersler = derslerial();
+    super.initState();
+  }
+
+  void bak() {
+    _firestore.collection('Person').doc(authService.infouser()).collection('alinacakdersler').get().then((value) {
+      print(value.docs);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,9 +86,6 @@ class _DerslerimPageState extends State<DerslerimPage> {
                         Icons.search,
                         color: Colors.grey,
                       ),
-                    ],
-                  ),
-                ),
                 SizedBox(
                   width: Get.width * 0.05,
                 ),
@@ -80,6 +104,8 @@ class _DerslerimPageState extends State<DerslerimPage> {
             for (var element in snapshot.data.docs) {
               listem.add(element.data()['ders']);
             }
+            print('******************');
+            print(snapshot.data.docs[0].data()['ders']);
             print(listem);
           }
           return FutureBuilder(
@@ -102,6 +128,9 @@ class _DerslerimPageState extends State<DerslerimPage> {
                         listem2.add(element.data());
                       }
                     }
+
+                    print('*************');
+                    print(snapshot.data.docs[0].data());
                     print(listem2);
                     print('data var');
                     return ListView.builder(
@@ -124,6 +153,92 @@ class _DerslerimPageState extends State<DerslerimPage> {
             },
           );
         },
+      ),
+    );
+  }
+}
+
+class SelectedCardDesign extends StatefulWidget {
+  const SelectedCardDesign(
+      {super.key, required this.dersadi, required this.ogretmenisim, required this.dersid, required this.ogretmenid});
+
+  final String dersadi;
+  final String ogretmenisim;
+  final String dersid;
+  final String ogretmenid;
+  @override
+  State<SelectedCardDesign> createState() => _SelectedCardDesignState();
+}
+
+class _SelectedCardDesignState extends State<SelectedCardDesign> {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  AuthService authService = AuthService();
+  @override
+  void initState() {
+    super.initState();
+    print('Zzzzzzzzzzz');
+    print(widget.ogretmenid);
+    print(widget.dersid);
+    print('Zzzzzzzzzzz');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: ColorConstants.instance.hippieGreenLight8x,
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+        child: ListTile(
+          title: Row(
+            children: [
+              SizedBox(
+                width: Get.width * 0.75,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.ogretmenisim,
+                      style: TextStyle(
+                        fontWeight: StringDetailConstants.instance.textWeightBold,
+                        fontSize: StringDetailConstants.instance.buttonBigSize,
+                      ),
+                    ),
+                    Text(
+                      widget.dersadi,
+                      style: TextStyle(
+                        fontWeight: StringDetailConstants.instance.textWeightSemiBold,
+                        fontSize: StringDetailConstants.instance.textFieldSize,
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizedboxConstans.instance.spaceSmall / 3,
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(3),
+                              backgroundColor: MaterialStateProperty.all(ColorConstants.instance.hippieGreen),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
+                          onPressed: (() {
+                            Get.to(VideoSDKQuickStart(
+                              dersid: widget.dersid,
+                              ogretmenid: widget.ogretmenid,
+                            ));
+                          }),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
