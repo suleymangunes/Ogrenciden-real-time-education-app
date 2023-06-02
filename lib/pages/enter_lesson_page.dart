@@ -105,6 +105,103 @@ class _EnterLessonState extends State<EnterLesson> {
   void anasayfadon() {
     Get.offAll(const HomePage());
   }
-
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                "assets/images/ogrenciden_logo_png.png",
+                height: Get.height * 0.05,
+              ),
+            )
+          ],
+        ),
+        body: Card(
+          color: ColorConstants.instance.hippieGreenLight8x,
+          elevation: 3,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+            child: ListTile(
+              title: Column(
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: Get.width * 0.55,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.ogretmenadi,
+                              style: TextStyle(
+                                fontWeight: StringDetailConstants.instance.textWeightBold,
+                                fontSize: StringDetailConstants.instance.buttonBigSize,
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizedboxConstans.instance.spaceSmall,
+                            ),
+                            Text(
+                              widget.dersisim,
+                              style: TextStyle(
+                                fontWeight: StringDetailConstants.instance.textWeightSemiBold,
+                                fontSize: StringDetailConstants.instance.textFieldSize,
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizedboxConstans.instance.spaceSmall / 2,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Image.asset(
+                            "assets/images/insan.png",
+                            fit: BoxFit.cover,
+                            height: 80,
+                          ),
+                          SizedBox(
+                            height: SizedboxConstans.instance.spaceSmall / 2,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: SizedboxConstans.instance.spaceSmall,
+                  ),
+                  Text(widget.dersicerigi),
+                  SizedBox(
+                    height: SizedboxConstans.instance.spaceSmall / 2,
+                  ),
+                  Row(
+                    children: [
+                      TextButton(
+                          onPressed: _selectTime,
+                          child: Text(
+                            'Saati Seç: ${_time.format(context)}',
+                            style: TextStyle(fontSize: StringDetailConstants.instance.textFieldSize),
+                          )),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      TextButton(
+                          onPressed: _selectDate,
+                          child: Text(
+                            'Tarihi Seç: ${_date.day}.${_date.month}.${_date.year}',
+                            style: TextStyle(fontSize: StringDetailConstants.instance.textFieldSize),
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: SizedboxConstans.instance.spaceSmall / 2,
+                  ),
   }
 }
