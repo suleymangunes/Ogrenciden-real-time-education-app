@@ -148,7 +148,7 @@ class _DerslerimPageState extends State<DerslerimPage> {
                     return ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       itemCount: listem2.length,
-                       itemCount: 0,
+                      // itemCount: 0,
                       itemBuilder: ((context, index) {
                         return SelectedCardDesign(
                           dersadi: listem2[index]['dersadi'],
@@ -169,7 +169,6 @@ class _DerslerimPageState extends State<DerslerimPage> {
     );
   }
 }
-
 class SelectedCardDesign extends StatefulWidget {
   const SelectedCardDesign(
       {super.key, required this.dersadi, required this.ogretmenisim, required this.dersid, required this.ogretmenid});
@@ -256,13 +255,32 @@ class _SelectedCardDesignState extends State<SelectedCardDesign> {
                             ));
                              var meetid = createMeeting();
                              print(meetid.then((value) {
-                              print(value);
-                            }));
+                               print(value);
+                             }));
                              Get.to(const CanliYayin());
                           }),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2),
+                            child: Text(
+                              "Derse Katıl",
+                              style: TextStyle(fontSize: Get.width * 0.04, letterSpacing: 2),
+                            ),
+                          ),
                         ),
                         SizedBox(
                           width: Get.width * 0.03,
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(3),
+                              backgroundColor: MaterialStateProperty.all(ColorConstants.instance.crimson),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
+                          onPressed: (() {
+                            .onError((error, stackTrace) {
+                              print('erro oldu');
+                            });
+                          }),
                         ),
                       ],
                     ),
