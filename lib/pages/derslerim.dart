@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/canli_video/video_sdk_main.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/constants/color_constants.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/constants/sizedbox_constants.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/constants/string_detail_constants.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/pages/home_page.dart';
@@ -86,6 +88,16 @@ class _DerslerimPageState extends State<DerslerimPage> {
                         Icons.search,
                         color: Colors.grey,
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(left: Get.width * 0.01),
+                        child: const Text(
+                          "Search something...",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(
                   width: Get.width * 0.05,
                 ),
@@ -136,7 +148,7 @@ class _DerslerimPageState extends State<DerslerimPage> {
                     return ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       itemCount: listem2.length,
-                      // itemCount: 0,
+                       itemCount: 0,
                       itemBuilder: ((context, index) {
                         return SelectedCardDesign(
                           dersadi: listem2[index]['dersadi'],
@@ -176,10 +188,10 @@ class _SelectedCardDesignState extends State<SelectedCardDesign> {
   @override
   void initState() {
     super.initState();
-    print('Zzzzzzzzzzz');
+    print('Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
     print(widget.ogretmenid);
     print(widget.dersid);
-    print('Zzzzzzzzzzz');
+    print('Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
   }
 
   @override
@@ -206,6 +218,9 @@ class _SelectedCardDesignState extends State<SelectedCardDesign> {
                         fontSize: StringDetailConstants.instance.buttonBigSize,
                       ),
                     ),
+                    SizedBox(
+                      height: SizedboxConstans.instance.spaceSmall / 1.2,
+                    ),
                     Text(
                       widget.dersadi,
                       style: TextStyle(
@@ -215,6 +230,16 @@ class _SelectedCardDesignState extends State<SelectedCardDesign> {
                     ),
                     SizedBox(
                       height: SizedboxConstans.instance.spaceSmall / 3,
+                    ),
+                    Text(
+                      "10.08.2022   17:30 - 18.30",
+                      style: TextStyle(
+                        fontWeight: StringDetailConstants.instance.titleWeight,
+                        fontSize: StringDetailConstants.instance.textFieldSize / 1.1,
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizedboxConstans.instance.spaceSmall / 2,
                     ),
                     Row(
                       children: [
@@ -229,7 +254,15 @@ class _SelectedCardDesignState extends State<SelectedCardDesign> {
                               dersid: widget.dersid,
                               ogretmenid: widget.ogretmenid,
                             ));
+                             var meetid = createMeeting();
+                             print(meetid.then((value) {
+                              print(value);
+                            }));
+                             Get.to(const CanliYayin());
                           }),
+                        ),
+                        SizedBox(
+                          width: Get.width * 0.03,
                         ),
                       ],
                     ),
