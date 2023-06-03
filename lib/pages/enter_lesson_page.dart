@@ -105,6 +105,7 @@ class _EnterLessonState extends State<EnterLesson> {
   void anasayfadon() {
     Get.offAll(const HomePage());
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,5 +204,166 @@ class _EnterLessonState extends State<EnterLesson> {
                   SizedBox(
                     height: SizedboxConstans.instance.spaceSmall / 2,
                   ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        elevation: MaterialStateProperty.all(3),
+                        backgroundColor: MaterialStateProperty.all(ColorConstants.instance.hippieGreen),
+                        shape:
+                            MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
+                    onPressed: katildimi
+                        ? null
+                        : (() {
+                            if (ogretmenid == widget.ogretmenid) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Text(
+                                            'Uyarı!!',
+                                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          const Text(
+                                            'Kendi dersine katılamazsın.',
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          BackButtonView(
+                                            title: 'Tamam',
+                                            fonk: () {
+                                              Get.back();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            } else if (listem.contains(widget.dersid)) {
+                              setState(() {
+                                katildimi = true;
+                              });
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Text(
+                                            'Uyarı!!',
+                                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          const Text(
+                                            'Dersi zaten almışsın.',
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          BackButtonView(
+                                            title: 'Tamam',
+                                            fonk: () {
+                                              Get.back();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            } else {
+                              _firestore
+                                  .collection('Person')
+                                  .doc(widget.ogretmenid)
+                                  .collection('alinacakdersler')
+                                  .doc(widget.dersid)
+                                  .set({'ders': widget.dersid});
+                              _firestore.collection('dersler').doc(widget.dersid).update({'dersalindimi': true});
+                              _firestore
+                                  .collection('Person')
+                                  .doc(authService.infouser())
+                                  .collection('alinacakdersler')
+                                  .doc(widget.dersid)
+                                  .set({
+                                'ders': widget.dersid,
+                              }).then((value) {
+                                return showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Dialog(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Text(
+                                              'Ders Alındı',
+                                              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                                            ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            const Text(
+                                              'Ders kaydın alındı. Derslerim kısmında kayıtlı olduğun dersleri görebilirsin.',
+                                              style: TextStyle(fontSize: 18),
+                                            ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            BackButtonView(
+                                              title: 'Tamam',
+                                              fonk: () {
+                                                print('calisiyo');
+                                                Get.offAll(const HomePage());
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              });
+                              setState(() {
+                                listem.contains(widget.dersid);
+                                katildimi = true;
+                              });
+                            }
+                          }),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: katildimi
+                          ? Text(
+                              "Ders Alındı",
+                              style: TextStyle(fontSize: Get.width * 0.05, letterSpacing: 2),
+                            )
+                          : Text(
+                              "Derse Katıl",
+                              style: TextStyle(fontSize: Get.width * 0.05, letterSpacing: 2),
+                            ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
