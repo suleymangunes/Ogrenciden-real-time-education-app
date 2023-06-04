@@ -78,8 +78,12 @@ class _DersEkleState extends State<DersEkle> {
                             horizontal: StringDetailConstants.instance.textFieldSize,
                             vertical: StringDetailConstants.instance.textFieldSize),
                         labelText: "Ders Adı",
+                         validator: (value) {
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-                  
+                   if (value == null || value.isEmpty) {
+                        return "Ders Adı alanı boş bırakılamaz.";
+                      }
+                      return null;
                   ),
                 ),
                 SizedBox(
@@ -103,12 +107,71 @@ class _DersEkleState extends State<DersEkle> {
                             vertical: StringDetailConstants.instance.textFieldSize),
                         labelText: "Ders İçeriği",
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                        validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Ders İçeriği boş olamaz";
+                      }
+                      return null;
+                    },
                     },
                   ),
                 ),
                 SizedBox(
                   height: SizedboxConstans.instance.spaceSmallBit,
                 ),
+                Hero(
+                  tag: "basla",
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                        elevation: MaterialStateProperty.all(5),
+                        backgroundColor: MaterialStateProperty.all(ColorConstants.instance.hippieGreen),
+                        shape:
+                            MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
+                    onPressed: (() {
+                      if (_formkey.currentState!.validate()) {
+                        setState(() {
+                          var random = const Uuid().v1();
+                          String? id = authService.infouser();
+                          String? name = authService.name();
+                          _firestore.collection('dersler').doc(random).set({
+                            'dersadi': _controllerMail.text,
+                            'dersicerigi': _controllerPassword.text,
+                            'dersalindimi': false,
+                            'ogretmenid': id,
+                            'dersid': random,
+                            'ogretmenisim': username,
+                            'canliid': ''
+                          }).then((value) {
+                            Get.to(const HomePage());
+                          }).onError((error, stackTrace) {
+                            print('hata oldu');
+                          });
+                          _butstate = true;
+                        });
+                      }
+                      // setState(() {
+                      //   _butstate = true;
+                      // });
+                      // Get.to(const HomePage());
+                    }),
+                    child: _butstate
+                        ? SizedBox(
+                            height: SizedboxConstans.instance.riveHeight,
+                            width: SizedboxConstans.instance.riveWidth,
+                            child: const RiveAnimation.asset("assets/gifs/loading.riv"))
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                            child: Text(
+                              "Ders Ekle",
+                              style:
+                                  TextStyle(fontSize: StringDetailConstants.instance.buttonBigSize, letterSpacing: 3),
+                            ),
+                          ),
+                  ),
+                ),
+              ],
+            ),
+          ),
                 
         ),
       ),
