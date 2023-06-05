@@ -287,6 +287,13 @@ class _SelectedCardDesignState extends State<SelectedCardDesign> {
                               print('erro oldu');
                             });
                           }),
+                                 child: Padding(
+                            padding: const EdgeInsets.all(2),
+                            child: Text(
+                              "İptal Et",
+                              style: TextStyle(fontSize: Get.width * 0.04, letterSpacing: 2),
+                            ),
+                          ),
                         )
                         ),
                       ],
