@@ -276,11 +276,18 @@ class _SelectedCardDesignState extends State<SelectedCardDesign> {
                               backgroundColor: MaterialStateProperty.all(ColorConstants.instance.crimson),
                               shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
+                                       onPressed: (() {
+                            firestore.collection('dersler').doc(widget.dersid).update({
+                              'dersalindimi': false,
+                            });
+                                       }  
                           onPressed: (() {
+                                print('calisti mi');
                             .onError((error, stackTrace) {
                               print('erro oldu');
                             });
                           }),
+                        )
                         ),
                       ],
                     ),
