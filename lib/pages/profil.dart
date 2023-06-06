@@ -3,10 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/alerts/alert_error.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/constants/sizedbox_constants.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/pages/olusturdugum_derslerim.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/pages/sign_in.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/service/auth_register.dart';
 
 import '../constants/string_detail_constants.dart';
+
+class Profil extends StatefulWidget {
+  const Profil({super.key});
+
+  @override
+  State<Profil> createState() => _ProfilState();
+}
 
 class _ProfilState extends State<Profil> {
   String? isim;
@@ -19,6 +27,11 @@ class _ProfilState extends State<Profil> {
   Future<DocumentSnapshot<Map<String, dynamic>>> nameAl() async {
     return await firestore.collection('Person').doc(authService.infouser()).get();
   }
+
+  olusturduklariGetir() async {
+    return firestore.collection('dersler').get();
+  }
+
   List olusturduklarim = [];
   @override
   Widget build(BuildContext context) {
@@ -38,8 +51,19 @@ class _ProfilState extends State<Profil> {
       body: FutureBuilder(
         future: olusturduklariGetir(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            listem = [];
+            listem2 = [];
+            for (var element in snapshot.data.docs) {
+              if (authService.infouser() == element.data()['ogretmenid']) {
+                print('evet var');
+                print(element.data());
+                listem.add(element.data());
+              }
+            }
+            print(listem);
+          }
           return FutureBuilder(
-            // future: ,
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               return Column(
                 children: [
@@ -96,6 +120,51 @@ class _ProfilState extends State<Profil> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: Get.height * 0.09,
+                    width: Get.width,
+                    child: Card(
+                      elevation: 3,
+                      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      color: ColorConstants.instance.hippieGreenLight4x,
+                      child: InkWell(
+                        onTap: (() {
+                          Get.to(OlusturdugumDerslerim(
+                            liste: listem,
+                          ));
+                        }),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, right: 30, left: 30, bottom: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Oluşturduğum Derslerim",
+                                style: TextStyle(
+                                  fontWeight: StringDetailConstants.instance.titleWeight,
+                                  fontSize: StringDetailConstants.instance.buttonBigSize / 1.2,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                   SizedBox(
+                    height: Get.height * 0.09,
+                    width: Get.width,
+                    child: Card(
+                  elevation: 3,
+                   margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                 color: ColorConstants.instance.hippieGreenLight4x,
+                  child: InkWell(
+                   onTap: (() {
+                  Get.to(const ProfilDuzenle());
+                      }),
+                     ),
+                    ),
+                   ),
                 ],
               );
             },
