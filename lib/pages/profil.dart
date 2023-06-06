@@ -161,7 +161,22 @@ class _ProfilState extends State<Profil> {
                   child: InkWell(
                    onTap: (() {
                   Get.to(const ProfilDuzenle());
-                      }),
+                 }),
+                 child: Padding(
+                  padding: const EdgeInsets.only(top: 15, right: 30, left: 30, bottom: 15),
+                 child: Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                 Text(
+                  "Düzenle",
+               style: TextStyle(
+                   fontWeight: StringDetailConstants.instance.titleWeight,
+                 fontSize: StringDetailConstants.instance.buttonBigSize / 1.2,
+                          ),
+                         ),
+                        ],
+                       ),
+                      ),
                      ),
                     ),
                    ),
