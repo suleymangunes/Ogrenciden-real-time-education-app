@@ -1,0 +1,107 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/alerts/alert_error.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/constants/sizedbox_constants.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/pages/sign_in.dart';
+import 'package:ogrenciden_canli_egitim_uygulamasi/service/auth_register.dart';
+
+import '../constants/string_detail_constants.dart';
+
+class _ProfilState extends State<Profil> {
+  String? isim;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  AuthService authService = AuthService();
+  List listem = [];
+  List listem2 = [];
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> nameAl() async {
+    return await firestore.collection('Person').doc(authService.infouser()).get();
+  }
+  List olusturduklarim = [];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(
+              "assets/images/ogrenciden_logo_png.png",
+              height: Get.height * 0.05,
+            ),
+          )
+        ],
+      ),
+      body: FutureBuilder(
+        future: olusturduklariGetir(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          return FutureBuilder(
+            // future: ,
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              return Column(
+                children: [
+                  SizedBox(
+                    height: Get.height * 0.41,
+                    child: Card(
+                      elevation: 3,
+                      margin: const EdgeInsets.all(20),
+                      color: ColorConstants.instance.hippieGreenLight8x,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30, right: 30, left: 30, bottom: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: CircleAvatar(
+                                radius: Get.width / 6,
+                                backgroundImage: const AssetImage("assets/images/insan.png"),
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizedboxConstans.instance.spaceSmall * 2,
+                            ),
+                            Text(
+                              isim ?? '',
+                              style: TextStyle(
+                                fontWeight: StringDetailConstants.instance.textWeightBold,
+                                fontSize: StringDetailConstants.instance.buttonBigSize / 1.1,
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizedboxConstans.instance.spaceSmall,
+                            ),
+                            Text(
+                              "Fırat Üniversitesi - Mühendislik Fakültesi",
+                              style: TextStyle(
+                                fontWeight: StringDetailConstants.instance.titleWeight,
+                                fontSize: StringDetailConstants.instance.buttonBigSize / 1.4,
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizedboxConstans.instance.spaceSmall / 2,
+                            ),
+                            Text(
+                              "Yazılım Mühendisliği / 4. Sınıf",
+                              style: TextStyle(
+                                fontWeight: StringDetailConstants.instance.titleWeight,
+                                fontSize: StringDetailConstants.instance.buttonBigSize / 1.4,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
