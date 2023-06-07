@@ -33,6 +33,21 @@ class _ProfilState extends State<Profil> {
   }
 
   List olusturduklarim = [];
+   @override
+  void initState() {
+    super.initState();
+    nameAl().then((value) {
+      print('******************');
+      print(value.data()?['userName']);
+      setState(() {
+        isim = value.data()?['userName'];
+      });
+    });
+    olusturduklariGetir().then((value) {
+      print('###############');
+      print(value.docs);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -180,6 +195,35 @@ class _ProfilState extends State<Profil> {
                      ),
                     ),
                    ),
+                   SizedBox(
+                     height: Get.height * 0.09,
+                     width: Get.width,
+                     child: Card(
+                       elevation: 3,
+                       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                       color: ColorConstants.instance.hippieGreenLight4x,
+                       child: InkWell(
+                         onTap: (() {
+                           Get.to(const IslenmisDersler());
+                         }),
+                         child: Padding(
+                           padding: const EdgeInsets.only(top: 15, right: 30, left: 30, bottom: 15),
+                           child: Column(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               Text(
+                                 "İşlenmiş Dersler",
+                                 style: TextStyle(
+                                   fontWeight: StringDetailConstants.instance.titleWeight,
+                                   fontSize: StringDetailConstants.instance.buttonBigSize / 1.2,
+                                 ),
+                               ),
+                             ],
+                           ),
+                         ),
+                       ),
+                     ),
+                    ),
                 ],
               );
             },
