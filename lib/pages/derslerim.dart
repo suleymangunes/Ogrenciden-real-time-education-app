@@ -169,6 +169,7 @@ class _DerslerimPageState extends State<DerslerimPage> {
     );
   }
 }
+
 class SelectedCardDesign extends StatefulWidget {
   const SelectedCardDesign(
       {super.key, required this.dersadi, required this.ogretmenisim, required this.dersid, required this.ogretmenid});
@@ -253,11 +254,11 @@ class _SelectedCardDesignState extends State<SelectedCardDesign> {
                               dersid: widget.dersid,
                               ogretmenid: widget.ogretmenid,
                             ));
-                             var meetid = createMeeting();
-                             print(meetid.then((value) {
-                               print(value);
-                             }));
-                             Get.to(const CanliYayin());
+                            // var meetid = createMeeting();
+                            // print(meetid.then((value) {
+                            //   print(value);
+                            // }));
+                            // Get.to(const CanliYayin());
                           }),
                           child: Padding(
                             padding: const EdgeInsets.all(2),
@@ -277,10 +278,86 @@ class _SelectedCardDesignState extends State<SelectedCardDesign> {
                               shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
                           onPressed: (() {
-                            .onError((error, stackTrace) {
+                            firestore.collection('dersler').doc(widget.dersid).update({
+                              'dersalindimi': false,
+                            });
+
+                            firestore
+                                .collection('Person')
+                                .doc(widget.ogretmenid)
+                                .collection('alinacakdersler')
+                                .doc(widget.dersid)
+                                .delete();
+
+                            firestore
+                                .collection('Person')
+                                .doc(authService.infouser())
+                                .collection('alinacakdersler')
+                                .doc(widget.dersid)
+                                .delete()
+                                .then((value) {
+                              return showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Text(
+                                            'Ders Kaydı silindi!',
+                                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          const Text(
+                                            'Dersi kaldırma işlemi başarılı.',
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          ElevatedButton(
+                                            style: ButtonStyle(
+                                                elevation: MaterialStateProperty.all(3),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(ColorConstants.instance.hippieGreen),
+                                                shape: MaterialStateProperty.all(
+                                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
+                                            onPressed: (() {
+                                              print('burda');
+                                              Get.offAll(const HomePage());
+                                            }),
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(2),
+                                              child: Text(
+                                                'Tamam',
+                                                style: TextStyle(fontSize: 15, letterSpacing: 1),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                              print('calisti mi');
+                            }).onError((error, stackTrace) {
                               print('erro oldu');
                             });
+                            // setState(() {});
+                            // DerslerimPage().lis
                           }),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2),
+                            child: Text(
+                              "İptal Et",
+                              style: TextStyle(fontSize: Get.width * 0.04, letterSpacing: 2),
+                            ),
+                          ),
                         ),
                       ],
                     ),

@@ -4,8 +4,11 @@ import 'package:get/get.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/alerts/alert_error.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/constants/color_constants.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/constants/sizedbox_constants.dart';
+<<<<<<< HEAD
 import 'package:ogrenciden_canli_egitim_uygulamasi/pages/Islenmis_dersler.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/pages/iptal_edilen_dersler.dart';
+=======
+>>>>>>> 192de2de6bd188afed41123ae69873e55343d914
 import 'package:ogrenciden_canli_egitim_uygulamasi/pages/olusturdugum_derslerim.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/pages/sign_in.dart';
 import 'package:ogrenciden_canli_egitim_uygulamasi/service/auth_register.dart';
@@ -36,8 +39,12 @@ class _ProfilState extends State<Profil> {
   }
 
   List olusturduklarim = [];
+<<<<<<< HEAD
 
   @override
+=======
+   @override
+>>>>>>> 192de2de6bd188afed41123ae69873e55343d914
   void initState() {
     super.initState();
     nameAl().then((value) {
@@ -52,7 +59,10 @@ class _ProfilState extends State<Profil> {
       print(value.docs);
     });
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 192de2de6bd188afed41123ae69873e55343d914
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,20 +79,27 @@ class _ProfilState extends State<Profil> {
         ],
       ),
       body: FutureBuilder(
+<<<<<<< HEAD
         // sonradan değişen veriler Veri tabanından veri alındı
+=======
+>>>>>>> 192de2de6bd188afed41123ae69873e55343d914
         future: olusturduklariGetir(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             listem = [];
             listem2 = [];
             for (var element in snapshot.data.docs) {
+<<<<<<< HEAD
               // listem.add(element.data()['ogretmenid']);
+=======
+>>>>>>> 192de2de6bd188afed41123ae69873e55343d914
               if (authService.infouser() == element.data()['ogretmenid']) {
                 print('evet var');
                 print(element.data());
                 listem.add(element.data());
               }
             }
+<<<<<<< HEAD
             // print('******************');
             // print(snapshot.data.docs[0].data());
             // print(listem);
@@ -91,6 +108,11 @@ class _ProfilState extends State<Profil> {
           }
           return FutureBuilder(
             // future: ,
+=======
+            print(listem);
+          }
+          return FutureBuilder(
+>>>>>>> 192de2de6bd188afed41123ae69873e55343d914
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               return Column(
                 children: [
@@ -151,8 +173,13 @@ class _ProfilState extends State<Profil> {
                     height: Get.height * 0.09,
                     width: Get.width,
                     child: Card(
+<<<<<<< HEAD
                       elevation: 3, //gölgelendirme degeri
                       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // yatay ve dikey margin degeri
+=======
+                      elevation: 3,
+                      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+>>>>>>> 192de2de6bd188afed41123ae69873e55343d914
                       color: ColorConstants.instance.hippieGreenLight4x,
                       child: InkWell(
                         onTap: (() {
@@ -163,7 +190,11 @@ class _ProfilState extends State<Profil> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 15, right: 30, left: 30, bottom: 15),
                           child: Column(
+<<<<<<< HEAD
                             crossAxisAlignment: CrossAxisAlignment.start, //hizalama baslat
+=======
+                            crossAxisAlignment: CrossAxisAlignment.start,
+>>>>>>> 192de2de6bd188afed41123ae69873e55343d914
                             children: [
                               Text(
                                 "Oluşturduğum Derslerim",
@@ -178,6 +209,7 @@ class _ProfilState extends State<Profil> {
                       ),
                     ),
                   ),
+<<<<<<< HEAD
                   SizedBox(
                     height: Get.height * 0.09,
                     width: Get.width,
@@ -237,6 +269,96 @@ class _ProfilState extends State<Profil> {
                     ),
                   ),
                   SizedBox(
+=======
+                   SizedBox(
+                    height: Get.height * 0.09,
+                    width: Get.width,
+                    child: Card(
+                  elevation: 3,
+                   margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                 color: ColorConstants.instance.hippieGreenLight4x,
+                  child: InkWell(
+                   onTap: (() {
+                  Get.to(const ProfilDuzenle());
+                 }),
+                 child: Padding(
+                  padding: const EdgeInsets.only(top: 15, right: 30, left: 30, bottom: 15),
+                 child: Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                 Text(
+                  "Düzenle",
+               style: TextStyle(
+                   fontWeight: StringDetailConstants.instance.titleWeight,
+                 fontSize: StringDetailConstants.instance.buttonBigSize / 1.2,
+                          ),
+                         ),
+                        ],
+                       ),
+                      ),
+                     ),
+                    ),
+                   ),
+                   SizedBox(
+                     height: Get.height * 0.09,
+                     width: Get.width,
+                     child: Card(
+                       elevation: 3,
+                       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                       color: ColorConstants.instance.hippieGreenLight4x,
+                       child: InkWell(
+                         onTap: (() {
+                           Get.to(const IslenmisDersler());
+                         }),
+                         child: Padding(
+                           padding: const EdgeInsets.only(top: 15, right: 30, left: 30, bottom: 15),
+                           child: Column(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               Text(
+                                 "İşlenmiş Dersler",
+                                 style: TextStyle(
+                                   fontWeight: StringDetailConstants.instance.titleWeight,
+                                   fontSize: StringDetailConstants.instance.buttonBigSize / 1.2,
+                                 ),
+                               ),
+                             ],
+                           ),
+                         ),
+                       ),
+                     ),
+                    ),
+                   SizedBox(
+                     height: Get.height * 0.09,
+                     width: Get.width,
+                     child: Card(
+                       elevation: 3,
+                       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                       color: ColorConstants.instance.hippieGreenLight4x,
+                       child: InkWell(
+                         onTap: (() {
+                           Get.to(const IptalEdilenDersler());
+                         }),
+                         child: Padding(
+                           padding: const EdgeInsets.only(top: 15, right: 30, left: 30, bottom: 15),
+                           child: Column(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               Text(
+                                 "İptal Edilen Dersler",
+                                 style: TextStyle(
+                                   fontWeight: StringDetailConstants.instance.titleWeight,
+                                   fontSize: StringDetailConstants.instance.buttonBigSize / 1.2,
+                                 ),
+                               ),
+                             ],
+                           ),
+                         ),
+                       ),
+                     ),
+                   ),
+                                     SizedBox(
+>>>>>>> 192de2de6bd188afed41123ae69873e55343d914
                     height: Get.height * 0.09,
                     width: Get.width,
                     child: Card(
