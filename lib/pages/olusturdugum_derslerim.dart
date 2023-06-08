@@ -27,6 +27,21 @@ class _OlusturdugumDerslerimState extends State<OlusturdugumDerslerim> {
           )
         ],
       ),
+      body: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemCount: widget.liste.length,
+        // itemCount: 0,
+
+        itemBuilder: (BuildContext context, int index) {
+          return OlusturulanDersCard(
+            dersadi: widget.liste[index]['dersadi'],
+            dersicerigi: widget.liste[index]['dersicerigi'],
+            dersid: widget.liste[index]['dersid'],
+            ogretmenadi: widget.liste[index]['ogretmenisim'],
+            ogretmenid: widget.liste[index]['ogretmenid'],
+          );
+        },
+      ),
     );
   }
 }
