@@ -34,7 +34,21 @@ class _JoinScreenState extends State<JoinScreen> {
           widget.ogretmenid == authService.infouser()
               ? ElevatedButton(onPressed: widget.onCreateMeetingButtonPressed, child: const Text("Create Meeting"))
               : const SizedBox.shrink(),
+
           const SizedBox(height: 16),
+          // TextField(
+          //     decoration: const InputDecoration(
+          //       hintText: "Meeting ID",
+          //       border: OutlineInputBorder(),
+          //     ),
+          //     onChanged: onMeetingIdChanged),
+          // const SizedBox(height: 8),
+          widget.ogretmenid == authService.infouser()
+              ? const SizedBox.shrink()
+              : ElevatedButton(
+                  onPressed: widget.onJoinMeetingButtonPressed,
+                  child: const Text("Join"),
+                )
         ],
       ),
     );
