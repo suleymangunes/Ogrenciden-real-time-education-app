@@ -1,4 +1,4 @@
-# Live Education App built with Flutter and Firebase
+# Stream Live Education App built with Flutter and Firebase
 
 
 ### MockUp
