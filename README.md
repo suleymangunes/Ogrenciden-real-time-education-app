@@ -1,5 +1,6 @@
 # Stream Live Education App built with Flutter and Firebase
 
+Ogrenciden is a video-based live chat education app that allows students to engage in real-time video conversations. Through Ogrenciden students can interact with expert teachers, ask questions, and receive live lessons. The app provides students with the opportunity to easily access the educational support they need and offers personalized learning experiences. With Ogrenciden students can enhance their learning journey by connecting directly with teachers and receiving guidance tailored to their individual needs
 
 ### MockUp
 
